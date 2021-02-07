@@ -23,7 +23,6 @@ export class FooterComponent implements OnInit {
 
 	ngOnInit(): void {    
 		  
-
 		/*=============================================
 		Tomamos la data de las categorías
 		=============================================*/
