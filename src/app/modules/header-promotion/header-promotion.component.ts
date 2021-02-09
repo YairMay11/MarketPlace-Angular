@@ -36,7 +36,7 @@ export class HeaderPromotionComponent implements OnInit {
           /* Generar un numero aleatorio */
 
           let index  = Math.floor(Math.random()*size);
-          console.log("index", index);
+          /* console.log("index", index); */
 
           /* Devolver un Baner aleatorio */
                     
