@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 
 import { Path } from '../../../config';
-import { OwlCarouselConfig } from '../../../functions';
+import { OwlCarouselConfig, BackgroundImage } from '../../../functions';
 
 @Component({
   selector: 'app-home-banner',
@@ -72,7 +72,8 @@ export class HomeBannerComponent implements OnInit {
      if (this.render){
        this.render = false;
        
-       OwlCarouselConfig.fnc()
+       OwlCarouselConfig.fnc();
+       BackgroundImage.fnc();
      }
    }
 
