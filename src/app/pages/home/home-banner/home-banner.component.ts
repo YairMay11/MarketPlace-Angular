@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 
 import { Path } from '../../../config';
+import { OwlCarouselConfig } from '../../../functions';
 
 @Component({
   selector: 'app-home-banner',
@@ -15,10 +16,13 @@ export class HomeBannerComponent implements OnInit {
   banner_home: Array<any> =[];
   category: Array<any> =[];
   url: Array<any> =[];
+  render:Boolean = true;
+  preload:Boolean = false;
 
   constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
+    this.preload = true;
 
     let index = 0;
 
@@ -57,9 +61,19 @@ export class HomeBannerComponent implements OnInit {
               /* console.log('this.banner_home',this.banner_home); */
               this.category.push(resp[i].category)
               this.url.push(resp[i].url)
+              this.preload = false;
             }
           })
         })
   }
+
+   /* Funcion que nos avisa el renderizado de ANGULAR */
+   callback(){
+     if (this.render){
+       this.render = false;
+       
+       OwlCarouselConfig.fnc()
+     }
+   }
 
 }
