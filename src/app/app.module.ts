@@ -19,6 +19,7 @@ import { SearchComponent } from './pages/search/search.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { HomeBannerComponent } from './pages/home/home-banner/home-banner.component';
 import { HomeFeaturesComponent } from './pages/home/home-features/home-features.component';
+import { HomePromotionsComponent } from './pages/home/home-promotions/home-promotions.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { HomeFeaturesComponent } from './pages/home/home-features/home-features.
     Error404Component,
     HomeBannerComponent,
     HomeFeaturesComponent,
+    HomePromotionsComponent,
   ],
   imports: [
     BrowserModule,
