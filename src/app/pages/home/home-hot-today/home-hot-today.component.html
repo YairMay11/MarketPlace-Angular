@@ -60,8 +60,11 @@
 
                                                         </div>
 
-                                                        <div class="ps-product__badge">
-                                                        	<span>Save <br> $280.000</span>
+                                                        <div 
+                                                         [attr.offer]="products[i].offer"
+                                                         [attr.price]="products[i].price"
+                                                        class="ps-product__badge offer_1">
+                                                        	
                                                         </div>
 
                                                     </div>
@@ -83,7 +86,11 @@
 
                                                 <div class="ps-product__meta">
 
-                                                    <h4 class="ps-product__price sale">$36.78 <del>{{products[i].price}}</del></h4>
+                                                    <h4 class="ps-product__price sale">
+
+                                                    <span class="offer_2"></span>
+
+                                                    <del>{{products[i].price}}</del></h4>
 
                                                     <div class="ps-product__rating">
 
@@ -113,7 +120,7 @@
 
                                                     <p>Expires In</p>
 
-                                                    <ul class="ps-countdown" data-time="July 21, 2020 23:00:00">
+                                                    <ul class="ps-countdown offer_3" [attr.data-time]="">
 
                                                         <li><span class="days"></span>
                                                             <p>Days</p>

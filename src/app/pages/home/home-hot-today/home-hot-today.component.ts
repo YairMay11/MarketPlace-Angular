@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
 import { ProductsService } from '../../../services/products.service';
-import {OwlCarouselConfig, CarouselNavigation, SlickConfig, ProductLightbox} from '../../../functions';
+import {OwlCarouselConfig, CarouselNavigation, SlickConfig, ProductLightbox, CountDown} from '../../../functions';
 
 declare var jQuery:any;
 declare var $:any;
@@ -115,7 +115,7 @@ export class HomeHotTodayComponent implements OnInit {
                 </div>`
           )
 
-          console.log('galleryMix_3[i]',galleryMix_3[i]);
+         /*  console.log('galleryMix_3[i]',galleryMix_3[i]); */
         }
 
 
@@ -125,6 +125,75 @@ export class HomeHotTodayComponent implements OnInit {
       CarouselNavigation.fnc();
       SlickConfig.fnc();
       ProductLightbox.fnc();
+
+       /* SELECCIONAMOS EL DOM DE LA OFERTA */
+
+       let offer_1 = $(".offer_1");
+       let offer_2 = $(".offer_2");
+       let offer_3 = $(".offer_3");
+
+       /* RECORREMOS TODOS LOS INDICES DE LOS PRODUCTOS */
+
+       for(let i = 0; i < offer_1.length; i ++){
+
+        /* CAPTURAMOS EL ARRAY DE OFERRTAS DE CADA PRODUCTO */
+
+        let offer = JSON.parse($(offer_1[i]).attr("offer"));
+
+      /*   console.log('offer',offer[0]); */
+        /* CAPTURAMOS EL PRECIO DE CADA PRODUCTO */
+
+        let price = Number($(offer_1[i]).attr("price"));
+
+        /* PREGUNTAMOS SI ES UNN DESCUENTO */
+
+        if(offer[0] == "Disccount"){
+
+            $(offer_1[i]).html(
+
+              `<span>Save <br> $${(price * offer[1]/100).toFixed(2) }</span>`
+
+          )
+
+          $(offer_2[i]).html(`$${(price-(price * offer[1]/100)).toFixed(2)}`)	
+        }
+
+        /* PREGUNTAMOS SI EL PRECIO ES FIJO  */
+
+        if(offer[0] == "Fixed"){
+
+          $(offer_1[i]).html(
+
+						`<span>Save <br> $${(price-offer[1]).toFixed(2) }</span>`
+
+					)
+
+					$(offer_2[i]).html(`$${offer[1]}`)	
+
+        }
+         /* AGREGAMOS LA FECHA AL DESCONTADOR  */
+
+         $(offer_3[i]).attr("data-time", 
+
+						new Date(
+
+						parseInt(offer[2].split("-")[0]),
+						parseInt(offer[2].split("-")[1])-1,
+						parseInt(offer[2].split("-")[2])
+
+					)
+
+				)	
+
+        /*Ejecutar funciones globales con respecto a las ofertas */			
+
+			  CountDown.fnc();
+
+
+
+
+       }
+
     }
   }
 
