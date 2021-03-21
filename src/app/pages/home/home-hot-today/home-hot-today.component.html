@@ -92,19 +92,17 @@
 
                                                     <del>{{products[i].price}}</del></h4>
 
-                                                    <div class="ps-product__rating">
+                                                    <div
+                                                    [attr.reviews] = "products[i].reviews"
+                                                    class="ps-product__rating review_1">
 
-                                                        <select class="ps-rating" data-read-only="true">
+                                                        <select class="ps-rating review_2" data-read-only="true">
 
-                                                            <option value="1">1</option>
-                                                            <option value="1">2</option>
-                                                            <option value="1">3</option>
-                                                            <option value="1">4</option>
-                                                            <option value="2">5</option>
+                                                          
 
                                                         </select>
 
-                                                        <span>(1 review)</span>
+                                                        <span class="review_3"></span>
 
                                                     </div>
 

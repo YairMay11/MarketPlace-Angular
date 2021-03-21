@@ -735,7 +735,7 @@ export class AppComponent implements OnInit {
 		        // slickConfig();     
 		        // productLightbox();        
 		        // rating();
-		        backToTop();
+		        backToTop(); 
 		        stickyHeader();
 		        filterSlider();
 		        // mapConfig();
