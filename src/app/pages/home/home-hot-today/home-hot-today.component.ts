@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
 import { ProductsService } from '../../../services/products.service';
-import {OwlCarouselConfig, CarouselNavigation, SlickConfig, ProductLightbox, CountDown, Rating} from '../../../functions';
+import {OwlCarouselConfig, CarouselNavigation, SlickConfig, ProductLightbox, CountDown, Rating, ProgressBar} from '../../../functions';
 
 declare var jQuery:any;
 declare var $:any;
@@ -221,10 +221,12 @@ export class HomeHotTodayComponent implements OnInit {
       CarouselNavigation.fnc();
       SlickConfig.fnc();
       ProductLightbox.fnc();
-      /*Ejecutar funciones globales con respecto a las ofertas */			
+      /*Ejecutar funciones globales con respecto a las Ofertas */			
       CountDown.fnc();
-      /*Ejecutar funciones globales con respecto a las reseñas */	
+      /*Ejecutar funciones globales con respecto a las Reseñas */	
       Rating.fnc();
+      /*Ejecutar funciones globales con respecto al Stock */
+      ProgressBar.fnc();
 
     }
   }

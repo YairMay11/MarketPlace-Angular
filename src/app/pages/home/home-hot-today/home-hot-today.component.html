@@ -142,11 +142,11 @@
 
                                                 <div class="ps-product__processs-bar">
 
-                                                    <div class="ps-progress" data-value="10">
+                                                    <div class="ps-progress" [attr.data-value]="products[i].stock">
                                                     	<span class="ps-progress__value"></span>
                                                     </div>
 
-                                                    <p><strong>4/79</strong> Sold</p>
+                                                    <p><strong>{{100-products[i].stock}}/100</strong> Sold</p>
 
                                                 </div>
 
