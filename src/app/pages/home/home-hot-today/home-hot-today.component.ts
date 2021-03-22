@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
-import { ProductsService } from '../../../services/products.service';
 import {OwlCarouselConfig, CarouselNavigation, SlickConfig, ProductLightbox, CountDown, Rating, ProgressBar} from '../../../functions';
+import { ProductsService } from '../../../services/products.service';
+import { SalesService } from '../../../services/sales.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -19,7 +20,8 @@ export class HomeHotTodayComponent implements OnInit {
   render:Boolean = true;
   cargando:Boolean = false;
 
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService,
+              private salesService: SalesService) { }
 
   ngOnInit(): void {
 
@@ -74,6 +76,56 @@ export class HomeHotTodayComponent implements OnInit {
           }
 
         })
+
+        /* TOMAMOS LA DATA DE LAS VENTAS */ 
+
+        let getSales = [];
+
+        this.salesService.getData()
+
+        .subscribe(resp =>{
+          /* console.log('resp',resp); */
+
+          /* RECORREMOS CADA VENTA PARA SEPARAR LOS PRODUCTOS Y LAS CANTIDADES */
+
+          let i;
+
+          for(i in resp){
+          getSales.push({
+              "product":resp[i].product,
+              "quantity":resp[i].quantity
+
+            })
+          }
+
+          /* ORDENAMOS DE MAYOR A MENOR EL ARREGLO DE OBJETOS */
+          getSales.sort(function(a,b){
+            return(b.quantity - a.quantity)
+          })
+          /* console.log('getSales',getSales); */
+          /* SACAMOS DEL ARREGLO LOS PRODUCTOS REPETIDOS DEJANDO  LOS DE MAYOR VENTA */
+          let filterSales = [];
+          getSales.forEach( sale =>{
+            if( !filterSales.find(resp => resp.product == sale.product)){
+              const{product, quantity} = sale;
+              filterSales.push({product,quantity})
+            }
+          })
+          /* console.log('filterSales',filterSales); */
+          /* FILTRAMOS LA DATA DE PRODUCTOS BUSCANDO COINCIDENCIAS CON LAS VENTAS */ 
+
+          filterSales.forEach((sale, index)=>{
+            /* FILTRAMOS HASTA 20 VENTAS */
+            if(index < 20){
+              this.productsService.getFilterData("name", sale.product)
+              .subscribe( resp => {
+                console.log('resp',resp);
+              })
+            }
+          })
+
+        })
+
   }
    /* FUNCION QUE NOS AVISA CUANDO TERMINA EL RENDERIZADO  */
    callback(){

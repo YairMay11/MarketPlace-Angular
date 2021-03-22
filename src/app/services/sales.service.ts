@@ -7,13 +7,11 @@ import { Api } from '../config';
 })
 export class SalesService {
 
-	private api:String = Api.url;
+  private api:String = Api.url;
 
-  	constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) { }
 
-	getData(){
-
-		return this.http.get(`${this.api}sales.json`);
-
-	}
+  getData(){
+    return this.http.get(`${this.api}sales.json`);
+  }
 }
