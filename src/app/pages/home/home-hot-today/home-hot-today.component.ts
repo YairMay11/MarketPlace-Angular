@@ -19,6 +19,9 @@ export class HomeHotTodayComponent implements OnInit {
   products:Array<any> = [];
   render:Boolean = true;
   cargando:Boolean = false;
+  topSales:Array<any> = [];
+  topSalesBlock:Array<any> = [];
+  renderBestSeller:Boolean = true;
 
   constructor(private productsService: ProductsService,
               private salesService: SalesService) { }
@@ -114,15 +117,36 @@ export class HomeHotTodayComponent implements OnInit {
           /* console.log('filterSales',filterSales); */
           /* FILTRAMOS LA DATA DE PRODUCTOS BUSCANDO COINCIDENCIAS CON LAS VENTAS */ 
 
+          let block = 0;
+
           filterSales.forEach((sale, index)=>{
+            block ++;
             /* FILTRAMOS HASTA 20 VENTAS */
             if(index < 20){
               this.productsService.getFilterData("name", sale.product)
               .subscribe( resp => {
-                console.log('resp',resp);
+                /* console.log('resp',resp); */
+                let i;
+                for(i in  resp){
+
+                  this.topSales.push(resp[i])
+
+                }
               })
             }
           })
+
+          /* ENVIAMOS EL MAXIMO DE BLOQUES  PARA MOSTRAR 4 PRODUCTOS POR BLOQUE */
+           /* console.log('block',block); */
+
+           for(let i = 0; i < Math.ceil(block/4); i++){
+
+            this.topSalesBlock.push(i);
+
+           }
+           /* console.log('this.topSalesBlock',this.topSalesBlock); */
+
+
 
         })
 
@@ -282,5 +306,82 @@ export class HomeHotTodayComponent implements OnInit {
 
     }
   }
+
+   /* FUNCION QUE NOS AVISA CUANDO TERMINA EL RENDERIZADO de los BestSeller (TOP 20)  */
+   callbackBestSeller(topSales){
+
+    if (this.renderBestSeller){
+      this.renderBestSeller = false;
+
+      /* console.log('topSales',topSales); */
+      /* CAPTURAMOS LA CANTIDAD DE BLOQUES QUE EXISTEN EN EL DOOM */
+
+      let topSaleBlock = $(".topSaleBlock");
+      let top20Array = [];
+
+      /* EJECUTAMOS UN SetTimeOut | POR CADA BLOQUE UN SEGUNDO DE ESPERA */
+
+      setTimeout(function(){
+
+      
+
+        for(let i = 0; i < topSaleBlock.length; i++){
+        /* AGRUPAMOS LA CANTIDAD DE 4 PRODUCTOS POR BLOQUE */
+
+        top20Array.push(
+
+          topSales.slice(i*topSaleBlock.length, (i*topSaleBlock.length)+topSaleBlock.length)
+        )
+
+        /* HACEMOS UN RECORRIDO POR EL NUEVO ARRAY DE OBJETOS */
+        let f;
+
+        for(f in top20Array[i]){
+
+              $(topSaleBlock[i]).append(`
+              <div class="ps-product--horizontal">
+
+                                            <div class="ps-product__thumbnail">
+                                            	<a href="product-default.html">
+                                            		<img src="{{path}}img/products/technology/1.jpg" alt="">
+                                            	</a>
+                                            </div>
+
+                                            <div class="ps-product__content">
+
+                                            	<a class="ps-product__title" href="product-default.html">Sound Intone I65 Earphone White Version</a>
+
+                                                <div class="ps-product__rating">
+
+                                                    <select class="ps-rating" data-read-only="true">
+                                                        <option value="1">1</option>
+                                                        <option value="1">2</option>
+                                                        <option value="1">3</option>
+                                                        <option value="1">4</option>
+                                                        <option value="2">5</option>
+                                                    </select>
+
+                                                    <span>01</span>
+
+                                                </div>
+
+                                                <p class="ps-product__price">105.30</p>
+
+                                            </div>
+
+                                        </div>
+              `)
+            }
+
+      }
+      console.log('top20Array',top20Array);
+     
+
+    }, topSaleBlock.length*1000)
+      /* console.log('top20Array',top20Array); */
+
+    }
+
+   }
 
 }
