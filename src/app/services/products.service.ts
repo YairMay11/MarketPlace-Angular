@@ -24,4 +24,22 @@ export class ProductsService {
 		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
 
 	}
+  
+	getFilterDataWithLimit(orderBy:String, equalTo:String, limitToFirst:Number){
+
+		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&equalTo="${equalTo}"&limitToFirst=${limitToFirst}&print=pretty`);
+
+	}
+
+	getSearchData(orderBy:String, param:String){
+
+		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&startAt="${param}"&endAt="${param}\uf8ff"&print=pretty`);
+
+	}
+
+	patchData(id:String, value:Object){
+
+		return this.http.patch(`${this.api}products/${id}.json`,value);
+
+	}
 }

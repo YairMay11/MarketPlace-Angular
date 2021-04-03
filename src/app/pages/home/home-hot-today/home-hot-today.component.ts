@@ -120,9 +120,10 @@ export class HomeHotTodayComponent implements OnInit {
           let block = 0;
 
           filterSales.forEach((sale, index)=>{
-            block ++;
+           
             /* FILTRAMOS HASTA 20 VENTAS */
             if(index < 20){
+              block ++;
               this.productsService.getFilterData("name", sale.product)
               .subscribe( resp => {
                 /* console.log('resp',resp); */
@@ -393,7 +394,9 @@ export class HomeHotTodayComponent implements OnInit {
       }
       /* console.log('top20Array',top20Array); */
      
-
+      /* MODIFICAMOS LE ESTILO DEL PLUGIN OWL CAROUSEL */
+      $(".owl-dots").css({"bottom":"0"})
+				$(".owl-dot").css({"background":"#ddd"})
     }, topSaleBlock.length*1000)
       /* console.log('top20Array',top20Array); */
 
