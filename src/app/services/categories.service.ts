@@ -7,12 +7,19 @@ import { Api } from '../config';
 })
 export class CategoriesService {
 
-  private api:String = Api.url;
+	private api:String = Api.url;
 
-  constructor(private http:HttpClient) { }
+  	constructor(private http:HttpClient) { }
 
-  getData(){
-    return this.http.get(`${this.api}categories.json`)
-  }
+  	getData(){
 
-}
+		return this.http.get(`${this.api}categories.json`);
+
+	}
+
+	getFilterData(orderBy:String, equalTo:String){
+
+		return this.http.get(`${this.api}categories.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
+
+	}
+} 

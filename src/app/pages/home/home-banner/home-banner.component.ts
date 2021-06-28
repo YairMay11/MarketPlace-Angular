@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Path } from '../../../config';
+import { OwlCarouselConfig } from '../../../functions';
 
 import { ProductsService } from '../../../services/products.service';
-
-import { Path } from '../../../config';
-import { OwlCarouselConfig, BackgroundImage } from '../../../functions';
 
 @Component({
   selector: 'app-home-banner',
@@ -12,69 +11,87 @@ import { OwlCarouselConfig, BackgroundImage } from '../../../functions';
 })
 export class HomeBannerComponent implements OnInit {
 
-  path:String = Path.url;
-  banner_home: Array<any> =[];
-  category: Array<any> =[];
-  url: Array<any> =[];
-  render:Boolean = true;
-  preload:Boolean = false;
+	path:String = Path.url;	
+	banner_home:Array<any> = [];
+	category:Array<any> = [];
+	url:Array<any> = [];
+	render:Boolean = true;
+	preload:Boolean = false;
 
-  constructor(private productsService: ProductsService) { }
+	constructor(private productsService: ProductsService) { }
 
-  ngOnInit(): void {
-    this.preload = true;
+	ngOnInit(): void {
 
-    let index = 0;
+		this.preload = true;
 
-    this.productsService.getData()
-        .subscribe(resp =>{
-         /*  console.log('resp',resp); */
+		let index = 0;
 
-        /* Tomar la logitud del objeto */
-        let i;
-        let size = 0;
-        for(i in resp){
-          size ++
+		this.productsService.getData()
+		.subscribe(resp =>{
+			
+			/*=============================================
+			Tomar la longitud del objeto
+			=============================================*/
 
-        }
-          /* console.log('size',size); */
-          /* Devolver un Baner aleatorio */
+			let i;
+			let size = 0;
 
-          if(size > 5){
+			for(i in resp){
 
-            index = Math.floor(Math.random()*(size-5)); 
-            /* console.log('index',index); */
-          }
+				size++			
 
-          /* Seleccionar data de los productos con limites */
+			}
 
-         
-        
-          this.productsService.getLimitData(Object.keys (resp)[index], 5 )
+			/*=============================================
+			Generar un número aleatorio 
+			=============================================*/
 
-          .subscribe(resp =>{
-            /* console.log('resp',resp); */
+			if(size > 5){
 
-            let i;
-            for(i in resp){
-              this.banner_home.push(JSON.parse(resp[i].horizontal_slider))
-              /* console.log('this.banner_home',this.banner_home); */
-              this.category.push(resp[i].category)
-              this.url.push(resp[i].url)
-              this.preload = false;
-            }
-          })
-        })
-  }
+				index = Math.floor(Math.random()*(size-5));
 
-   /* Funcion que nos avisa el renderizado de ANGULAR */
-   callback(){
-     if (this.render){
-       this.render = false;
-       
-       OwlCarouselConfig.fnc();
-       BackgroundImage.fnc();
-     }
-   }
+			}
+
+			/*=============================================
+			Seleccionar data de productos con límites
+			=============================================*/
+
+
+			this.productsService.getLimitData(Object.keys(resp)[index], 5)
+			.subscribe( resp => { 
+
+				let i;
+
+				for(i in resp){
+				
+					this.banner_home.push(JSON.parse(resp[i].horizontal_slider))
+					this.category.push(resp[i].category)
+					this.url.push(resp[i].url)
+
+					this.preload = false;
+
+				}
+
+			})
+
+		})
+
+	}
+
+	/*=============================================
+	Función que nos avisa cuando finaliza el renderizado de Angular
+	=============================================*/
+	
+	callback(){
+
+		if(this.render){
+
+			this.render = false;
+
+			OwlCarouselConfig.fnc()
+
+		}
+
+	}
 
 }

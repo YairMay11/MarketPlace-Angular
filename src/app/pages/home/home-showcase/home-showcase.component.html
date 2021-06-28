@@ -8,17 +8,13 @@ Section Gray
 	*ngIf="!cargando"
     class="container">
 
-    	<!--=====================================
-		Products of category
-		======================================-->  
+    	<!--Categoria de Productos-->  
 
         <div 
 		*ngFor="let category of categories; let lastIndex = last; let i = index"
         class="ps-block--products-of-category">
 
-        	<!--=====================================
-			Menu subcategory
-			======================================-->  
+        	<!--Menu Subcategoria-->  
 
             <div class="ps-block__categories">
 
@@ -32,9 +28,7 @@ Section Gray
 
             </div>
 
-            <!--=====================================
-			Vertical Slider Category
-			======================================-->  
+            <!--Slider Vertical de Categoria-->  
 
             <div class="ps-block__slider">
 

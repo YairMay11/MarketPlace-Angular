@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
+
 import { ProductsService } from '../../../services/products.service';
 
 @Component({
@@ -9,58 +10,70 @@ import { ProductsService } from '../../../services/products.service';
 })
 export class HomePromotionsComponent implements OnInit {
 
-  path:String = Path.url;
-  banner_default: Array<any> =[];
-  category: Array<any> =[];
-  url: Array<any> =[];
-  preload:Boolean = false;
+	path:String = Path.url;
+	banner_default:Array<any> = [];	
+	category:Array<any> = [];
+	url:Array<any> = [];
+	preload:Boolean = false;
 
-  constructor(private productsService: ProductsService) { }
+  	constructor(private productsService: ProductsService) { }
 
-  ngOnInit(): void {
-    this.preload = true;
+  	ngOnInit(): void {
 
-    let index = 0;
+		this.preload = true;
 
-    this.productsService.getData()
-        .subscribe(resp =>{
-         /*  console.log('resp',resp); */
+		let index = 0;
 
-        /* Tomar la logitud del objeto */
-        let i;
-        let size = 0;
-        for(i in resp){
-          size ++
+		this.productsService.getData()
+		.subscribe(resp =>{
+			
+			/*=============================================
+			Tomar la longitud del objeto
+			=============================================*/
 
-        }
-          /* console.log('size',size); */
-          /* Devolver un Baner aleatorio */
+			let i;
+			let size = 0;
 
-          if(size > 2){
+			for(i in resp){
 
-            index = Math.floor(Math.random()*(size-2)); 
-            /* console.log('index',index); */
-          }
+				size++			
 
-          /* Seleccionar data de los productos con limites */
+			}
 
-         
-        
-          this.productsService.getLimitData(Object.keys (resp)[index], 2 )
+			/*=============================================
+			Generar un número aleatorio 
+			=============================================*/
 
-          .subscribe(resp =>{
-            /* console.log('resp',resp); */
+			if(size > 2){
 
-            let i;
-            for(i in resp){
-              this.banner_default.push(resp[i].default_banner)
-              /* console.log('this.banner_default',this.banner_default); */
-              this.category.push(resp[i].category)
-              this.url.push(resp[i].url)
-              this.preload = false;
-            }
-          })
-        })
-  }
+				index = Math.floor(Math.random()*(size-2));
+
+			}
+
+			/*=============================================
+			Seleccionar data de productos con límites
+			=============================================*/
+
+
+			this.productsService.getLimitData(Object.keys(resp)[index], 2)
+			.subscribe( resp => { 
+
+				let i;
+
+				for(i in resp){
+				
+					this.banner_default.push(resp[i].default_banner)
+					this.category.push(resp[i].category)
+					this.url.push(resp[i].url)
+
+					this.preload = false;
+
+				}
+
+			})
+
+		})
+
+	}
 
 }

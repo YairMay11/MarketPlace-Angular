@@ -174,51 +174,31 @@ export class HomeShowcaseComponent implements OnInit {
 							let type;
 							let value;
 							let offer;
-							let disccount = "";
-							let offerDate;
-        				    let today = new Date();
-				
+							let disccount;
+
 							if(arrayProducts[i].offer != ""){
 
-								offerDate = new Date(
+								type = JSON.parse(arrayProducts[i].offer)[0];
+								value = JSON.parse(arrayProducts[i].offer)[1];
 
-					                parseInt(JSON.parse(arrayProducts[i].offer)[2].split("-")[0]),
-					                parseInt(JSON.parse(arrayProducts[i].offer)[2].split("-")[1])-1,
-					                parseInt(JSON.parse(arrayProducts[i].offer)[2].split("-")[2])
-
-					            )
-
-					            if(today < offerDate){
-
-									type = JSON.parse(arrayProducts[i].offer)[0];
-									value = JSON.parse(arrayProducts[i].offer)[1];
-
-									if(type == "Disccount"){
-										
-										offer = (arrayProducts[i].price - (arrayProducts[i].price * value/100)).toFixed(2)	
-									}
-
-									if(type == "Fixed"){
-
-										offer = value;
-										value = Math.round(offer*100/arrayProducts[i].price);
-
-									}
-
-									disccount = `<div class="ps-product__badge">-${value}%</div>`;
-
-									price = `<p class="ps-product__price sale">$${offer} <del>$${arrayProducts[i].price} </del></p>`
-
-								}else{
-
+								if(type == "Disccount"){
 									
-
-									price = `<p class="ps-product__price">$${arrayProducts[i].price} </p>`
+									offer = (arrayProducts[i].price - (arrayProducts[i].price * value/100)).toFixed(2)	
 								}
-							
-							}else{
 
-								
+								if(type == "Fixed"){
+
+									offer = value;
+									value = Math.round(offer*100/arrayProducts[i].price);
+
+								}
+
+								disccount = `<div class="ps-product__badge">-${value}%</div>`;
+
+								price = `<p class="ps-product__price sale">$${offer} <del>$${arrayProducts[i].price} </del></p>`
+
+						
+							}else{
 
 								price = `<p class="ps-product__price">$${arrayProducts[i].price} </p>`
 							}

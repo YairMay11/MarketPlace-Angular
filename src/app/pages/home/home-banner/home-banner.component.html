@@ -1,4 +1,3 @@
-
 <!--=====================================
 Home Banner
 ======================================-->  
@@ -6,13 +5,11 @@ Home Banner
 <div 
 *ngIf="!preload"
 class="ps-home-banner">
-    <div class="ps-carousel--nav-inside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1"  data-owl-duration="1000" data-owl-mousedrag="on" data-owl-animate-in="fadeIn" data-owl-animate-out="fadeOut">
+    <div class="ps-carousel--nav-inside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-animate-in="fadeIn" data-owl-animate-out="fadeOut">
 
         <div 
-		*ngFor="let slide of banner_home; let i = index; let lastIndex = last" 
-        class="ps-banner--market-4" 
-        [attr.data-background]="path+'img/products/'+category[i]+'/horizontal/'+slide['IMG tag']"
-        >
+		*ngFor="let slide of banner_home; let i = index; let lastIndex = last"
+        class="ps-banner--market-4">
         	<img src="{{path}}img/products/{{category[i]}}/horizontal/{{ slide['IMG tag']}}" alt="">
             <div class="ps-banner__content">
                 <h4>{{ slide["H4 tag"]}}</h4>
@@ -40,3 +37,4 @@ class="d-flex justify-content-center">
     <div class="spinner-border text-muted my-5"></div>
 
 </div>
+
