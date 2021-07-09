@@ -1,28 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
+
 import { OwlCarouselConfig, 
-	     CarouselNavigation, 
-	     Rating, 
-	     DinamicRating, 
+		 CarouselNavigation, 
+		 Rating,
+  		 DinamicRating, 
 	     DinamicReviews, 
-	     DinamicPrice } from '../../../functions';
+	     DinamicPrice  } from '../../../functions';
 
 import { ProductsService} from '../../../services/products.service';
 
 import { ActivatedRoute } from '@angular/router';
 
-declare var jQuery:any;
-declare var $:any;
-
 @Component({
-  selector: 'app-best-sales-item',
-  templateUrl: './best-sales-item.component.html',
-  styleUrls: ['./best-sales-item.component.css']
+  selector: 'app-products-recommended',
+  templateUrl: './products-recommended.component.html',
+  styleUrls: ['./products-recommended.component.css']
 })
-export class BestSalesItemComponent implements OnInit {
+export class ProductsRecommendedComponent implements OnInit {
 
 	path:String = Path.url;	
-	bestSalesItem:Array<any> = [];
+	recommendedItems:Array<any> = [];
 	render:Boolean = true;
 	rating:Array<any> = [];
 	reviews:Array<any> = [];
@@ -30,7 +28,7 @@ export class BestSalesItemComponent implements OnInit {
 	cargando:Boolean = false;
 
   	constructor(private productsService: ProductsService,
-  		        private activateRoute: ActivatedRoute,) { }
+  		        private activateRoute: ActivatedRoute) { }
 
   	ngOnInit(): void {
 
@@ -50,9 +48,9 @@ export class BestSalesItemComponent implements OnInit {
 		.subscribe(resp1=>{
 
 			if(Object.keys(resp1).length > 0){
-
+		
 				this.productsFnc(resp1);
-
+							
 			}else{
 
 				/*=============================================
@@ -60,8 +58,8 @@ export class BestSalesItemComponent implements OnInit {
 				=============================================*/	
 
 				this.productsService.getFilterData("sub_category", params)
-				.subscribe(resp2=>{
-		
+				.subscribe(resp2=>{		
+					
 					this.productsFnc(resp2);			
 					
 				})
@@ -73,12 +71,12 @@ export class BestSalesItemComponent implements OnInit {
   	}
 
   	/*=============================================
-	Declaramos función para mostrar las mejores ventas
+	Declaramos función para mostrar los productos recomendados
 	=============================================*/	
 
   	productsFnc(response){
 
-  		this.bestSalesItem = [];
+  		this.recommendedItems = [];
 
 		/*=============================================
 		Hacemos un recorrido por la respuesta que nos traiga el filtrado
@@ -98,7 +96,7 @@ export class BestSalesItemComponent implements OnInit {
 		=============================================*/	
 
 		getSales.sort(function(a,b){
-			return (b.sales - a.sales)
+			return (b.views - a.views)
 		})	
 
 		/*=============================================
@@ -109,13 +107,13 @@ export class BestSalesItemComponent implements OnInit {
 
 			if(index < 10){
 
-				this.bestSalesItem.push(product);
+				this.recommendedItems.push(product);
 				
-				this.rating.push(DinamicRating.fnc(this.bestSalesItem[index]));
+				this.rating.push(DinamicRating.fnc(this.recommendedItems[index]));
 				
 				this.reviews.push(DinamicReviews.fnc(this.rating[index]));
 
-				this.price.push(DinamicPrice.fnc(this.bestSalesItem[index]));
+				this.price.push(DinamicPrice.fnc(this.recommendedItems[index]));
 
 				this.cargando = false;
 
@@ -124,7 +122,7 @@ export class BestSalesItemComponent implements OnInit {
 		})
 
   	}
-
+	
  	/*=============================================
 	Función que nos avisa cuando finaliza el renderizado de Angular
 	=============================================*/
@@ -142,4 +140,5 @@ export class BestSalesItemComponent implements OnInit {
   		}
 
   	}
+
 }
